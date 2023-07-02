@@ -2,10 +2,13 @@
 const startBtn = document.getElementById("gauge_start-btn");
 const pauseBtn = document.getElementById("gauge_pause-btn");
 const stopBtn = document.getElementById("gauge_stop-btn");
+const outputContainer = document.getElementById("output-container");
 
 // AUDIO CAPTURING
-// Create an audio context
 const audioContext = new AudioContext();
+
+// Variable to track the pause state
+let isPaused = false;
 
 // Function starting the measurement
 startBtn.addEventListener("click", () => {
@@ -17,6 +20,7 @@ startBtn.addEventListener("click", () => {
       const microphoneSource = audioContext.createMediaStreamSource(stream);
       // Create the analyser node
       const analyserNode = audioContext.createAnalyser();
+      // connect the analyserNode to the microphone source
       microphoneSource.connect(analyserNode);
       // Set up analyser node configuration
       analyserNode.fftSize = 2048;
@@ -25,23 +29,23 @@ startBtn.addEventListener("click", () => {
 
       // Create a function to process audio data and calculate noise levels
       const processAudio = () => {
-        // Get audio data from the analyser node
+        //Check if the audio capture is paused
+        if (isPaused) return;
+        // Get audio data from the analyser node - getFloatFrequencyData converts received data into dB's, but the output is negative (from -Infinity to 0, where 0 is the loudest)
         analyserNode.getFloatFrequencyData(dataArray);
-
-        // Calculate the root mean square (RMS) of the audio data
-        let sumOfsquares = 0;
+        // set the maximum decibel level to use for offsetting the negative value
+        let maxDecibels = -Infinity;
         for (let i = 0; i < bufferLength; i++) {
-          const amplitude = dataArray[i];
-          sumOfsquares += amplitude * amplitude;
+          const decibels = dataArray[i];
+          if (decibels > maxDecibels) {
+            maxDecibels = decibels;
+          }
         }
-        const rms = Math.sqrt(sumOfsquares / bufferLength);
+        // offset corrects the negative values received from getFloatFrequencyData to present positive dB values of noise
+        const offset = 110;
+        const positiveMaxDecibels = maxDecibels + offset;
+        outputContainer.textContent = positiveMaxDecibels.toFixed(0);
 
-        // Covert RMS to decibels (dB)
-        const reference = 1; // Reference amplitude
-        const decibels = 20 * Math.log10(rms / reference);
-
-        // Updata the UI
-        console.log(decibels);
         // Call the processAudio function to continuously process audio data
         requestAnimationFrame(processAudio);
       };
@@ -57,11 +61,14 @@ startBtn.addEventListener("click", () => {
 // Function pausing the capture
 pauseBtn.addEventListener("click", () => {
   // Pause the audio capture
-  audioContext.suspend();
+  //   audioContext.suspend(); -- this doesn't work properly
+  isPaused = true;
 });
 
 // Function stopping the capture
 stopBtn.addEventListener("click", () => {
+  isPaused = true;
   // Stop the audio capture
+  // check how to stop the audio capture so that user can press check again and the process is restrted
   audioContext.close();
 });
