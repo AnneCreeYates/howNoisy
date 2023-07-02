@@ -5,15 +5,59 @@ const stopBtn = document.getElementById("gauge_stop-btn");
 const outputContainer = document.getElementById("output-container");
 
 // AUDIO CAPTURING
-const audioContext = new AudioContext();
-
-// Variable to track the pause state
+let audioContext;
+let stream;
+let isStopped = false;
 let isPaused = false;
+let processAudio;
 
-// Function starting the measurement
+// Start capture
 startBtn.addEventListener("click", () => {
+  // Reset the stop and pause variable
+  isStopped = false;
+  isPaused = false;
+  // Change the text displayed on the pauseBtn and startBtn
+  pauseBtn.textContent = "Pause";
+  startBtn.textContent = "Start";
+  startAudioCapture();
+});
+
+// Pause capture
+pauseBtn.addEventListener("click", () => {
+  // Toggle the isPaused variable
+  isPaused = !isPaused;
+  // Change the text displayed on the pause button
+  if (isPaused) {
+    pauseBtn.textContent = "Resume";
+  } else {
+    pauseBtn.textContent = "Pause";
+  }
+  // Call processAudio again to resume processing audio
+  processAudio();
+});
+
+// Stop capture
+stopBtn.addEventListener("click", () => {
+  // Set the isStopped variable to true
+  isStopped = true;
+  // Stop the audio capture
+  // check how to stop the audio capture so that user can press check again and the
+  if (stream) {
+    stream.getAudioTracks().forEach((track) => track.stop());
+  }
+  if (audioContext) {
+    audioContext.close();
+  }
+  // Reset the output displyed inthe browser to 0
+  outputContainer.textContent = "0";
+});
+
+// Function starting the capture
+async function startAudioCapture() {
+  // create new audio Context
+  audioContext = new AudioContext();
   // Access the user's microphone
-  navigator.mediaDevices
+  stream = await navigator.mediaDevices
     .getUserMedia({ audio: true })
     .then((stream) => {
       // Create a media stream source node from the microphone stream
@@ -28,9 +72,9 @@ startBtn.addEventListener("click", () => {
       const dataArray = new Float32Array(bufferLength);
 
       // Create a function to process audio data and calculate noise levels
-      const processAudio = () => {
+      processAudio = () => {
         //Check if the audio capture is paused
-        if (isPaused) return;
+        if (isPaused || isStopped) return;
         // Get audio data from the analyser node - getFloatFrequencyData converts received data into dB's, but the output is negative (from -Infinity to 0, where 0 is the loudest)
         analyserNode.getFloatFrequencyData(dataArray);
         // set the maximum decibel level to use for offsetting the negative value
@@ -44,6 +88,7 @@ startBtn.addEventListener("click", () => {
         // offset corrects the negative values received from getFloatFrequencyData to present positive dB values of noise
         const offset = 110;
         const positiveMaxDecibels = maxDecibels + offset;
+
         outputContainer.textContent = positiveMaxDecibels.toFixed(0);
 
         // Call the processAudio function to continuously process audio data
@@ -56,19 +101,4 @@ startBtn.addEventListener("click", () => {
     .catch((error) => {
       console.log(error);
     });
-});
-
-// Function pausing the capture
-pauseBtn.addEventListener("click", () => {
-  // Pause the audio capture
-  //   audioContext.suspend(); -- this doesn't work properly
-  isPaused = true;
-});
-
-// Function stopping the capture
-stopBtn.addEventListener("click", () => {
-  isPaused = true;
-  // Stop the audio capture
-  // check how to stop the audio capture so that user can press check again and the process is restrted
-  audioContext.close();
-});
+}
