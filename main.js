@@ -27,7 +27,7 @@ pauseBtn.addEventListener("click", () => {
   // Toggle the isPaused variable
   isPaused = !isPaused;
   // Change the text displayed on the pause button
-  if (isPaused) {
+  if (isPaused && !isStopped) {
     pauseBtn.textContent = "Resume";
   } else {
     pauseBtn.textContent = "Pause";
