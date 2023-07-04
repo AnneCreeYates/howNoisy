@@ -1,5 +1,5 @@
-import { startBtn, pauseBtn, stopBtn, outputContainer } from "../main.js";
-// initialise the defaul value of positive
+import { startBtn, pauseBtn } from "../main.js";
+// initialise the default value of positiveMaxDecibels
 let positiveMaxDecibels = 0;
 
 // AUDIO CAPTURING
@@ -16,7 +16,7 @@ function startCapture() {
   isPaused = false;
   // Change the text displayed on the pauseBtn and startBtn
   pauseBtn.textContent = "Pause";
-  startBtn.textContent = "Start";
+  startBtn.textContent = "New";
   startAudioCapture();
 }
 
@@ -46,12 +46,15 @@ function stopCapture() {
   if (audioContext) {
     audioContext.close();
   }
+  // After the button name is changed to New when pressed the first time, this changes it back to Start
+  startBtn.textContent = "Start";
+  // IF REMOVING THE ELEMENTS THAT ARE PRINTING TO BROWSER THE VALUES SENT TO THE ANIMATION FROM THIS FILE, REMOVE THIS AS WELL
   // Reset the output displyed inthe browser to 0
-  outputContainer.textContent = "0";
+  // outputParagraph.textContent = "0";
 }
 
 // Function starting the capture
-async function startAudioCapture() {
+export async function startAudioCapture() {
   // create new audio Context
   audioContext = new AudioContext();
 
@@ -87,12 +90,14 @@ async function startAudioCapture() {
       const offset = 110;
       positiveMaxDecibels = (maxDecibels + offset).toFixed(0);
 
+      // THIS PART MAY BE NOT NECESSARY BECAUSE THE VALUES ARE EXPORTED IN REAL TIME TO ANIMATION FILE -- CHECK LATER
       // Print only the values that are numbers, not -Infinity
-      if (positiveMaxDecibels === -Infinity) {
-        outputContainer.textContent = 0 + " dB";
-      } else {
-        outputContainer.textContent = positiveMaxDecibels + " dB";
-      }
+      // if (positiveMaxDecibels === "-Infinity") {
+      //   outputParagraph.textContent = 0 + " dB";
+      // } else {
+      //   outputParagraph.textContent = positiveMaxDecibels + " dB";
+      // }
+      // END OF THE PART FOR REMOVING -- POTENTIALLY
 
       // Call the processAudio function to continuously process audio data
       requestAnimationFrame(processAudio);
@@ -107,6 +112,11 @@ async function startAudioCapture() {
 
 // getter function for dynamic export of changing positiveMaxDecibels values
 function getPositiveMaxDecibels() {
-  return positiveMaxDecibels;
+  // Return only the values that are numbers, not -Infinity
+  if (positiveMaxDecibels === "-Infinity" || isStopped === true) {
+    return 0 + " dB";
+  } else {
+    return positiveMaxDecibels + " dB";
+  }
 }
 export { startCapture, pauseCapture, stopCapture, getPositiveMaxDecibels };
