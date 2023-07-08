@@ -114,9 +114,9 @@ export async function startAudioCapture() {
 function getPositiveMaxDecibels() {
   // Return only the values that are numbers, not -Infinity
   if (positiveMaxDecibels === "-Infinity" || isStopped === true) {
-    return 0 + " dB";
+    return 0;
   } else {
-    return positiveMaxDecibels + " dB";
+    return positiveMaxDecibels;
   }
 }
 export { startCapture, pauseCapture, stopCapture, getPositiveMaxDecibels };
