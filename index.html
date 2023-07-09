@@ -4,19 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HowLoud?</title>
+    <link rel="stylesheet" href="styles.css">
+    <!--FONTS-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Comfortaa:wght@300&family=Shizuru&display=swap"
+        rel="stylesheet">
+    <title>howNoisy?</title>
 </head>
 
 <body>
-    <section class="main_title">
-        <h1>HowLoud?</h1>
-        <p class="main_title-description">Here Goes a dscription of how the app is working</p>
-        <p class="main_title-disclaimer">Disclaimer: The app is not a scientific device. May be slightly inaccurate.</p>
+    <section class="main_title-section">
+        <h1>how<span class="main_title-noisy">Noisy?</span></h1>
+        <p class="main_title-description">It’s important to know that being exposed to noise frequently can have serious
+            and harmful
+            long-term effects on your health. It can contribute to conditions such as psychological problems,
+            depression, trauma, irritation,
+            high blood pressure, and even cardiac arrest. The damage caused by noise exposure is often permanent and can
+            be difficult
+            to detect as it develops gradually. The best way to protect yourself is by taking preventative measures,
+            such as using auditory protection.
+            This app is designed to give you an approximate idea of the noise levels around you in real-time and act as
+            an early warning system.
+            It can help you determine if the noise you’re currently experiencing may have harmful, lasting effects on
+            your health and assist you in controlling your exposure. Press START button to begin the measurement.</p>
     </section>
 
-    <section class="gauge">
-        <canvas id="gauge_canvas" width="300" height="300"> Representation of current noise level in decibels</canvas>
-        <p class="gauge-animation" id="output-paragraph"></p>
+    <section class="gauge-section">
+        <canvas id="gauge_canvas" width="500" height="500"> Representation of current noise level in decibels</canvas>
+        <p class="gauge-output-value" id="output-paragraph"><span id="dynamicValue"></span> dB</p>
         <button class="gauge_start-btn" id="gauge_start-btn">Start</button>
         <button class="gauge_pause-btn" id="gauge_pause-btn">Pause</button>
         <button class="gauge_stop-btn" id="gauge_stop-btn">Stop</button>
@@ -25,8 +41,17 @@
     <script type="module" src="./modules/dbCalculation.js"></script>
     <script type="module" src="./modules/animation.js"></script>
 
+    <section class="disclaimer">
+        <p class="main_title-disclaimer">Disclaimer: Please note that this application is not intended for scientific
+            use and may
+            not provide measurements with the level of accuracy required for certain purposes. For precise and accurate
+            measurements, it is
+            recommended to utilize a device specifically designed for such purposes. This application is intended to
+            provide an approximate
+            visualization of environmental noise levels in real-time.</p>
+    </section>
     <footer>
-        <p class="copyright">Copyright &copy; HowLoud? 2023</p>
+        <p class="copyright">Copyright &copy; howNoisy? 2023</p>
     </footer>
 </body>
 
