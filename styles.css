@@ -76,15 +76,18 @@ select {
 
 /*END OF RESET*/
 
-body {
+/*move the html part to the full screen on PC's - messes up the layout in mobile*/
+/* html {
   display: flex;
+  justify-content: center;
+} */
+
+body {
+  display: inline-flex;
   flex-direction: column;
-  /* justify-items: center; */
   background-color: rgb(10, 8, 10);
   color: azure;
   font-family: "Comfortaa", cursive;
-  /* margin: 0 auto;
-  width: 100%; */
 }
 
 .main_title-section,
@@ -92,14 +95,15 @@ body {
 .disclaimer,
 footer {
   display: grid;
-  margin: 0 auto;
   justify-items: center;
 }
 
 .main_title-section > h1 {
   font-size: 3em;
   font-family: "Shizuru", cursive;
-  padding: 1em 2em;
+  margin: 1em;
+  position: relative;
+  bottom: 1em;
 }
 
 .main_title-noisy {
@@ -110,14 +114,73 @@ footer {
   left: 0.05em;
 }
 
+p {
+  margin: 2em;
+  text-align: justify;
+  max-width: 900px;
+}
+
+/*GAUGE SECTION*/
+
+.gauge-section {
+  width: max-content;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 60% 20% 10%;
+}
+
+#gauge_canvas {
+  grid-column: 1 / span 3;
+  grid-row: 1 / span 3;
+}
+
 .gauge-output-value {
+  display: inline-flex;
+  grid-column: 2;
+  grid-row: 2;
   font-family: "Shizuru", cursive;
-  font-size: 3em;
-  width: 3em;
-  text-align: center;
+  font-size: 2em;
+  width: 100%;
+  justify-content: center;
+  margin: 0 auto;
+  /*line-height in this case positions the dB in line with the dynamicValue. With line-heigth normal it is at its top*/
+  line-height: 300%;
 }
 
 #dynamicValue {
-  width: 2em;
+  font-size: 2.5em;
+  width: 70%;
+  color: limegreen;
   text-align: center;
+  line-height: 70%;
+}
+
+.gauge_start-btn {
+  grid-column: 1;
+  grid-row: 3;
+  justify-self: end;
+}
+
+.gauge_pause-btn {
+  grid-column: 2;
+  grid-row: 3;
+}
+
+.gauge_stop-btn {
+  grid-column: 3;
+  grid-row: 3;
+  justify-self: baseline;
+}
+
+button {
+  width: 80%;
+  height: 90%;
+  font-size: 1.5em;
+  border-radius: 34px;
+  border-color: azure;
+  background-color: rgb(10, 8, 10);
+  color: azure;
+}
+
+button:hover {
+  background-color: rgb(57, 134, 18);
 }
