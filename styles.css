@@ -76,7 +76,6 @@ select {
 
 /*END OF RESET*/
 
-/*move the html part to the full screen on PC's - messes up the layout in mobile*/
 html {
   text-align: center;
 }
@@ -150,10 +149,8 @@ p {
 }
 
 #warning-message {
-  /* display: flex; */
   width: 160px;
   height: 140px;
-  /* margin: 0 auto; */
   grid-column: 2;
   grid-row: 2;
   font-size: 1.3em;

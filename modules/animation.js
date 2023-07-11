@@ -70,13 +70,9 @@ function drawGauge(value) {
     gaugeGradient.addColorStop(0.8, "orange");
     gaugeGradient.addColorStop(1, "red");
 
-    // fills up the background
-    // ctx.fillStyle = gaugeGradient;
-
     // creates the grove for the gauge colour -- not the canvas background
     ctx.clearRect(0, 0, canvas.width, canvas.height);
-    // the shape and size of the canvas
-    // ctx.fillRect(0, 0, 500, 500);
+
     // draw the background and the path of the desired shape in the canvas
     // dark gray outside arc -- the light border
     ctx.beginPath();
@@ -89,7 +85,6 @@ function drawGauge(value) {
     // the dark inner arc
     ctx.beginPath();
     ctx.lineWidth = 30;
-    // arc method: 1st and 2nd param defines the coordinates of the center of the circle; 3rd is a circle radius; 4th and 5th define beinning and end angle
     ctx.arc(250, 250, radius, angleStart, angleEnd);
     ctx.strokeStyle = "rgba(14, 11, 14, 0.9)";
     ctx.stroke();
@@ -102,8 +97,6 @@ function drawGauge(value) {
     // saves the current state of the gauge for the shadow
     ctx.save();
     ctx.shadowColor = "rgb(136, 255, 77)";
-    // ctx.shadowOffsetX = 0;
-    // ctx.shadowOffsetY = 0;
     ctx.shadowBlur = 70;
 
     // Fill the gauge with color
@@ -117,5 +110,8 @@ function drawGauge(value) {
     ctx.lineCap = "round";
   } else {
     // if unsupported for now send an alert to notify the user
+    alert(
+      "Your browser doesn't support canvas! You may want to change the browser for full app experience!"
+    );
   }
 }
