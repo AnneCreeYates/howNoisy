@@ -77,10 +77,9 @@ select {
 /*END OF RESET*/
 
 /*move the html part to the full screen on PC's - messes up the layout in mobile*/
-/* html {
-  display: flex;
-  justify-content: center;
-} */
+html {
+  text-align: center;
+}
 
 body {
   display: inline-flex;
@@ -96,6 +95,10 @@ body {
 footer {
   display: grid;
   justify-items: center;
+}
+
+section {
+  align-self: center;
 }
 
 .main_title-section > h1 {
@@ -121,11 +124,11 @@ p {
 }
 
 /*GAUGE SECTION*/
-
 .gauge-section {
-  width: max-content;
+  max-width: 600px;
+  overflow: hidden;
   grid-template-columns: repeat(3, 1fr);
-  grid-template-rows: 60% 20% 10%;
+  grid-template-rows: 27% 31% 20% 10%;
 }
 
 #gauge_canvas {
@@ -136,7 +139,7 @@ p {
 .gauge-output-value {
   display: inline-flex;
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 3;
   font-family: "Shizuru", cursive;
   font-size: 2em;
   width: 100%;
@@ -146,7 +149,18 @@ p {
   line-height: 300%;
 }
 
-#dynamicValue {
+#warning-message {
+  /* display: flex; */
+  width: 160px;
+  height: 140px;
+  /* margin: 0 auto; */
+  grid-column: 2;
+  grid-row: 2;
+  font-size: 1.3em;
+  text-align: center;
+}
+
+#dynamic-value {
   font-size: 2.5em;
   width: 70%;
   color: limegreen;
@@ -156,18 +170,18 @@ p {
 
 .gauge_start-btn {
   grid-column: 1;
-  grid-row: 3;
+  grid-row: 4;
   justify-self: end;
 }
 
 .gauge_pause-btn {
   grid-column: 2;
-  grid-row: 3;
+  grid-row: 4;
 }
 
 .gauge_stop-btn {
   grid-column: 3;
-  grid-row: 3;
+  grid-row: 4;
   justify-self: baseline;
 }
 

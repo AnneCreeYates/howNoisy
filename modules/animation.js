@@ -1,9 +1,11 @@
 import { getPositiveMaxDecibels } from "./dbCalculation.js";
 
-const outputParagraph = document.getElementById("output-paragraph");
-const dynamicValue = document.getElementById("dynamicValue");
 // definiftion of canvas context elements
 const canvas = document.getElementById("gauge_canvas");
+// the warning message
+const warningMessage = document.getElementById("warning-message");
+// const outputParagraph = document.getElementById("output-paragraph");
+const dynamicValue = document.getElementById("dynamic-value");
 
 // the function updates the content of the outputParagraph in the real time.
 //The function is called repeatedly using requestAnimationFrame, so it will continuously update the text content of the element with the current value.
@@ -11,7 +13,31 @@ function updateDecibelValue() {
   // dbValue is real-time value of calculated dB's that is being imported from the dbCalculteion.js
   const dbValue = getPositiveMaxDecibels();
   // outputs the value in the browser
-  dynamicValue.textContent = dbValue;
+  if (dbValue > 100) {
+    dynamicValue.textContent = dbValue;
+    dynamicValue.style.color = "red";
+    warningMessage.textContent =
+      "WARNING: Protect your health! Harmful noise level.";
+    warningMessage.style.color = "red";
+  } else if (dbValue > 80) {
+    dynamicValue.textContent = dbValue;
+    dynamicValue.style.color = "orange";
+    warningMessage.textContent = "CAUTION: Prolonged exposure may be harmful!";
+    warningMessage.style.color = "#3bb300";
+    warningMessage.style.margin = "0";
+  } else if (dbValue > 60) {
+    dynamicValue.textContent = dbValue;
+    dynamicValue.style.color = "#e6e600";
+    warningMessage.textContent = "Noise level acceptable.";
+    warningMessage.style.color = "#3bb300";
+  } else {
+    dynamicValue.textContent = dbValue;
+    dynamicValue.style.color = "#3bb300";
+    warningMessage.textContent = "Noise level safe.";
+    warningMessage.style.color = "#3bb300";
+    warningMessage.style.margin = "50px 0";
+  }
+
   // repeatedly calls the updateDecibleValue function
   requestAnimationFrame(updateDecibelValue);
   // update the gauge
