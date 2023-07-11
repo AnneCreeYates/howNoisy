@@ -106,7 +106,7 @@ section {
   font-family: "Shizuru", cursive;
   margin: 1em;
   position: relative;
-  bottom: 1em;
+  bottom: 0.6em;
 }
 
 .main_title-noisy {
@@ -197,4 +197,11 @@ button {
 
 button:hover {
   background-color: rgb(57, 134, 18);
+}
+
+hr {
+  position: relative;
+  top: 0.5em;
+  width: 50%;
+  border: 1px red dashed;
 }
