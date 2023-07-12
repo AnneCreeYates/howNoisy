@@ -43,13 +43,13 @@ function updateDecibelValue() {
     dynamicValue.textContent = dbValue;
     dynamicValue.style.color = "orange";
     warningMessage.textContent = "CAUTION: Prolonged exposure may be harmful!";
-    warningMessage.style.color = "#3bb300";
+    warningMessage.style.color = "orange";
     warningMessage.style.margin = "0";
   } else if (dbValue > 60) {
     dynamicValue.textContent = dbValue;
     dynamicValue.style.color = "#e6e600";
     warningMessage.textContent = "Noise level acceptable.";
-    warningMessage.style.color = "#3bb300";
+    warningMessage.style.color = "#e6e600";
   } else {
     dynamicValue.textContent = dbValue;
     dynamicValue.style.color = "#3bb300";
