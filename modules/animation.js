@@ -50,6 +50,7 @@ function updateDecibelValue() {
     dynamicValue.style.color = "#e6e600";
     warningMessage.textContent = "Noise level acceptable.";
     warningMessage.style.color = "#e6e600";
+    warningMessage.style.margin = "50px 0";
   } else {
     dynamicValue.textContent = dbValue;
     dynamicValue.style.color = "#3bb300";
