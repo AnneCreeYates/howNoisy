@@ -39,13 +39,13 @@ function updateDecibelValue() {
     warningMessage.textContent =
       "WARNING: Protect your health! Harmful noise level.";
     warningMessage.style.color = "red";
-  } else if (dbValue > 80) {
+  } else if (dbValue > 70) {
     dynamicValue.textContent = dbValue;
     dynamicValue.style.color = "orange";
     warningMessage.textContent = "CAUTION: Prolonged exposure may be harmful!";
     warningMessage.style.color = "orange";
     warningMessage.style.margin = "0";
-  } else if (dbValue > 60) {
+  } else if (dbValue > 50) {
     dynamicValue.textContent = dbValue;
     dynamicValue.style.color = "#e6e600";
     warningMessage.textContent = "Noise level acceptable.";
